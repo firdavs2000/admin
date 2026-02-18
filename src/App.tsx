@@ -2,6 +2,7 @@ import Sidebar from './components/Layout/Sidebar';
 import Header from './components/Layout/Header';
 import { useState } from 'react';
 import Dashboard from './components/Dashboard/Dashboard';
+import ProductsPage from './components/Products/ProductsPage';
 
 function App() {
   const [sideBarCollapse, setSideBarCollapsed] = useState(false);
@@ -29,6 +30,7 @@ function App() {
         <main className="flex-1 overflow-y-auto bg-transparent">
          <div className='p-6 space-y-6'>
           {currentPage === "dashboard" && <Dashboard />}
+          {currentPage === "products" && <ProductsPage />}
          </div>
         </main>
       </div>
