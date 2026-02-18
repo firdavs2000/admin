@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   BarChart3,
   Calendar,
@@ -14,13 +15,14 @@ import {
   Zap,
 } from "lucide-react";
 
-type SubMenuItem = { id: string; label: string };
+type SubMenuItem = { id: string; label: string; path?: string };
 type MenuItem = {
   id: string;
   icon: React.ComponentType<{ className?: string }>;
   label: string;
   badge?: string;
   count?: string;
+  path?: string;
   submenu?: SubMenuItem[];
   active?: boolean;
 };
@@ -38,9 +40,9 @@ const menuItems: MenuItem[] = [
     icon: BarChart3,
     label: "Analytics",
     submenu: [
-      { id: "overview", label: "Overview" },
-      { id: "reports", label: "Reports" },
-      { id: "insights", label: "Insights" },
+      { id: "overview", label: "Overview", path: "/analytics/overview" },
+      { id: "reports", label: "Reports", path: "/analytics/reports" },
+      { id: "insights", label: "Insights", path: "/analytics/insights" },
     ],
   },
   {
@@ -48,9 +50,9 @@ const menuItems: MenuItem[] = [
     icon: ShoppingBag,
     label: "Ecommerce",
     submenu: [
-      { id: "products", label: "Products" },
-      { id: "orders", label: "Orders" },
-      { id: "customers", label: "Customers" },
+      { id: "products", label: "Products", path: "/products" },
+      { id: "orders", label: "Orders", path: "/orders" },
+      { id: "customers", label: "Customers", path: "/customers" },
     ],
   },
   { id: "users", icon: User, label: "Users", count: "2.4" },
@@ -64,6 +66,7 @@ const menuItems: MenuItem[] = [
 
 const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentPage, onPageChange }) => {
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set(["analytics"]));
+  const navigate = useNavigate();
 
   const toggleExpanded = (itemId: string) => {
     const newExpanded = new Set(expandedItems);
@@ -75,10 +78,16 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentPage, onPageChange 
     setExpandedItems(newExpanded);
   };
 
+  const handleNavigate = (path?: string, pageId?: string) => {
+    if (path) navigate(path);
+    if (pageId) onPageChange?.(pageId);
+  };
+
   return (
     <div
-      className={`${collapsed ? "w-20" : "w-72"
-        } transition-all duration-300 ease-in-out bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-700/50 flex flex-col`}
+      className={`${
+        collapsed ? "w-20" : "w-72"
+      } transition-all duration-300 ease-in-out bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-700/50 flex flex-col`}
     >
       {/* Logo */}
       <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50">
@@ -100,28 +109,29 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentPage, onPageChange 
         {menuItems.map((item) => (
           <div key={item.id}>
             <button
-              className={`w-full flex items-center justify-between p-3 rounded-xl transition-all duration-200 ${currentPage === item.id || item.active
+              className={`w-full flex items-center justify-between p-3 rounded-xl transition-all duration-200 ${
+                currentPage === item.id || item.active
                   ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-300/25"
                   : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50"
-                }`}
+              }`}
               onClick={() => {
                 if (item.submenu) {
                   toggleExpanded(item.id);
                 } else {
-                  onPageChange?.(item.id);
+                  handleNavigate(item.path, item.id);
                 }
               }}
             >
               <div className="flex items-center space-x-3">
                 <item.icon className="w-5 h-5" />
-                
                 {!collapsed && <span className="font-medium ml-2">{item.label}</span>}
               </div>
 
               {!collapsed && item.submenu && (
                 <ChevronDown
-                  className={`w-4 h-4 transition-transform ${expandedItems.has(item.id) ? "rotate-180" : ""
-                    }`}
+                  className={`w-4 h-4 transition-transform ${
+                    expandedItems.has(item.id) ? "rotate-180" : ""
+                  }`}
                 />
               )}
             </button>
@@ -132,10 +142,12 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentPage, onPageChange 
                 {item.submenu.map((subitem) => (
                   <button
                     key={subitem.id}
-                    className="w-full text-left p-2 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-800
-                    dark:hover:text-slate-200
-                    hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all"
-                    onClick={() => onPageChange?.(subitem.id)}
+                    className={`w-full text-left p-2 text-sm rounded-lg transition-all ${
+                      currentPage === subitem.id
+                        ? "bg-blue-500 text-white"
+                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-800 dark:hover:text-slate-200 dark:hover:bg-slate-800/50"
+                    }`}
+                    onClick={() => handleNavigate(subitem.path, subitem.id)}
                   >
                     {subitem.label}
                   </button>
