@@ -4,28 +4,34 @@ import Header from "../components/Layout/Header";
 import { useState } from "react";
 
 export default function MainLayout() {
-  const [collapsed, setCollapsed] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [currentPage, setCurrentPage] = useState("dashboard");
+
+
   return (
-    <div className="flex h-screen">
+    <div className="h-screen w-screen flex bg-gradient-to-br 
+      from-slate-50 via-blue-50 to-indigo-50 
+      dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 
+      transition-all duration-500">
+
+      {/* Sidebar */}
       <Sidebar
-        collapsed={false}
-        onToggle={() => setCollapsed(!collapsed)}
+        collapsed={sidebarCollapsed}
+        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
       />
 
-
-      <div className="flex-1 flex flex-col">
-
-
+      <div className="flex-1 flex flex-col h-full">
         <Header
           sidebarCollapsed={sidebarCollapsed}
           onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
         />
 
-
-        {/* 👇 shu joyga Dashboard / Products keladi */}
-        <main className="flex-1 p-6 bg-slate-50">
-          <Outlet />
+        <main className="flex-1 overflow-y-auto bg-transparent">
+          <div className="p-6 space-y-6">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

@@ -3,8 +3,10 @@ import { Outlet } from "react-router-dom";
 
 const AuthLayout: React.FC = () => {
   return (
-    <div className="h-screen  flex items-center justify-center bg-gray-100">
-      <Outlet />
+    <div className=" h-screen flex items-center justify-center bg-gray-100">
+      
+        <Outlet />
+      
     </div>
   );
 };
