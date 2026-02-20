@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   BarChart3,
   Calendar,
@@ -72,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
 
   const getDefaultExpanded = () => {
     const active = menuItems.find((item) =>
-      item.submenu?.some((sub) => sub.link === location.pathname)
+      item.submenu?.some((sub) => sub.link )
     );
     return active ? new Set([active.id]) : new Set<string>();
   };
