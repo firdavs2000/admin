@@ -79,16 +79,14 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
 
   const [expandedItems, setExpandedItems] = useState<Set<string>>(getDefaultExpanded);
 
-  useEffect(() => {
-    setExpandedItems(getDefaultExpanded());
-  }, [location.pathname]);
-
-  const toggleExpanded = (id: string) => {
-    setExpandedItems((prev) => {
-      const newSet = new Set(prev);
-      newSet.has(id) ? newSet.delete(id) : newSet.add(id);
-      return newSet;
-    });
+ const toggleExpanded = (itemId: string) => {
+    const newExpanded = new Set(expandedItems);
+    if (newExpanded.has(itemId)) {
+      newExpanded.delete(itemId);
+    } else {
+      newExpanded.add(itemId);
+    }
+    setExpandedItems(newExpanded);
   };
 
   return (
