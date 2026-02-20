@@ -13,7 +13,7 @@ import {
   User,
   Zap,
 } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import userImg from "../../assets/img/bg.jpg";
 
 type SubMenuItem = {
@@ -34,6 +34,8 @@ type MenuItem = {
 
 type SidebarProps = {
   collapsed: boolean;
+  currentPage?: string;
+  onPageChange?: (pageId: string) => void;
 };
 
 const menuItems: MenuItem[] = [
@@ -67,19 +69,10 @@ const menuItems: MenuItem[] = [
   { id: "settings", icon: Settings, label: "Settings", link: "/settings" },
 ];
 
-const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
-  const location = useLocation();
+const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentPage, onPageChange }) => {
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set(["analytics"]));
 
-  const getDefaultExpanded = () => {
-    const active = menuItems.find((item) =>
-      item.submenu?.some((sub) => sub.link )
-    );
-    return active ? new Set([active.id]) : new Set<string>();
-  };
-
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(getDefaultExpanded);
-
- const toggleExpanded = (itemId: string) => {
+  const toggleExpanded = (itemId: string) => {
     const newExpanded = new Set(expandedItems);
     if (newExpanded.has(itemId)) {
       newExpanded.delete(itemId);
@@ -136,13 +129,20 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                 </NavLink>
               ) : (
                 <button
-                  onClick={() => toggleExpanded(item.id)}
+                 
                   className={`w-full flex items-center justify-between p-3 rounded-xl transition-all
                   ${
                     isActive
                       ? "text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg"
                       : "text-slate-600 dark:text-slate-300 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white"
                   }`}
+                    onClick={() => {
+                if (item.submenu) {
+                  toggleExpanded(item.id);
+                } else {
+                  onPageChange?.(item.id);
+                }
+              }}
                 >
                   <div className="flex items-center space-x-3">
                     <item.icon className="w-5 h-5" />
