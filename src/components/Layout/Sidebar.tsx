@@ -115,13 +115,16 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentPage, onPageChange 
               {item.link ? (
                 <NavLink
                   to={item.link}
-                  className={`w-full flex items-center justify-between p-3 rounded-xl transition-all
-                  ${
-                    isActive
+                  end={item.link === "/"} // 🔥 faqat dashboard uchun
+                  className={({ isActive }) =>
+                    `w-full flex items-center justify-between p-3 rounded-xl transition-all
+    ${isActive
                       ? "text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg"
                       : "text-slate-600 dark:text-slate-300 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white"
-                  }`}
+                    }`
+                  }
                 >
+
                   <div className="flex items-center space-x-3">
                     <item.icon className="w-5 h-5" />
                     {!collapsed && <span>{item.label}</span>}
@@ -129,20 +132,19 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentPage, onPageChange 
                 </NavLink>
               ) : (
                 <button
-                 
+
                   className={`w-full flex items-center justify-between p-3 rounded-xl transition-all
-                  ${
-                    isActive
+                  ${isActive
                       ? "text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg"
                       : "text-slate-600 dark:text-slate-300 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white"
-                  }`}
-                    onClick={() => {
-                if (item.submenu) {
-                  toggleExpanded(item.id);
-                } else {
-                  onPageChange?.(item.id);
-                }
-              }}
+                    }`}
+                  onClick={() => {
+                    if (item.submenu) {
+                      toggleExpanded(item.id);
+                    } else {
+                      onPageChange?.(item.id);
+                    }
+                  }}
                 >
                   <div className="flex items-center space-x-3">
                     <item.icon className="w-5 h-5" />
@@ -151,9 +153,8 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentPage, onPageChange 
 
                   {!collapsed && item.submenu && (
                     <ChevronDown
-                      className={`w-4 h-4 transition-transform ${
-                        expandedItems.has(item.id) ? "rotate-180" : ""
-                      }`}
+                      className={`w-4 h-4 transition-transform ${expandedItems.has(item.id) ? "rotate-180" : ""
+                        }`}
                     />
                   )}
                 </button>
@@ -167,10 +168,9 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentPage, onPageChange 
                       key={sub.id}
                       to={sub.link}
                       className={({ isActive }) =>
-                        `block p-2 text-sm rounded-lg ${
-                          isActive
-                            ? "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white"
-                            : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800/50"
+                        `block p-2 text-sm rounded-lg ${isActive
+                          ? "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white"
+                          : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800/50"
                         }`
                       }
                     >
