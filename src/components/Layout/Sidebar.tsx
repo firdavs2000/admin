@@ -30,6 +30,8 @@ type MenuItem = {
   submenu?: SubMenuItem[];
   badge?: string;
   count?: string;
+  to?: boolean;
+  end?:boolean;
 };
 
 type SidebarProps = {
