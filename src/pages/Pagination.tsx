@@ -1,40 +1,43 @@
-import React from "react";
 import ReactPaginate from "react-paginate";
-import { useDispatch } from "react-redux";
 
-interface Props {
-  totalPages: number;
-  currentPage: number;
-  setParamPage: (value: number) => void;
-}
-
-const Paginate: React.FC<Props> = ({
-  totalPages,
-  currentPage,
-  setParamPage,
-}) => {
-  const dispatch = useDispatch();
-
-  const onPageChange = (event: { selected: number }) => {
-    const selectedPage = event.selected + 1;
-    setParamPage(selectedPage);
-  };
-
+const Paginate = ({ totalPages, currentPage, setParamPage }) => {
   return (
-    <div className="flex justify-center mt-6">
+    <div className="flex items-center justify-end gap-4 mt-6">
+      
+      {/* Text */}
+      <p className="text-sm text-gray-700 dark:text-gray-300">
+        Page {currentPage} of {totalPages}
+      </p>
+
       <ReactPaginate
-        previousLabel={"←"}
-        nextLabel={"→"}
-        breakLabel={"..."}
+        breakLabel="..."
+        nextLabel="›"
+        previousLabel="‹"
         pageCount={totalPages}
         forcePage={currentPage - 1}
-        onPageChange={onPageChange}
-        containerClassName="flex gap-2"
-        pageClassName="px-3 py-1 border rounded-lg cursor-pointer"
-        activeClassName="bg-blue-500 text-white"
-        previousClassName="px-3 py-1 border rounded-lg cursor-pointer"
-        nextClassName="px-3 py-1 border rounded-lg cursor-pointer"
-        breakClassName="px-3 py-1"
+        onPageChange={(selectedItem) =>
+          setParamPage(selectedItem.selected + 1)
+        }
+
+        containerClassName="flex items-center gap-2"
+
+        pageClassName="px-3 py-1 rounded-md text-sm cursor-pointer 
+        text-gray-700 dark:text-gray-300 
+        hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+
+        activeClassName="hidden lg:flex items-center space-x-2 px-4 py-2
+        bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl
+        hover:shadow-lg transition"
+
+        previousClassName="px-2 py-1 cursor-pointer text-lg 
+        text-gray-700 dark:text-gray-300 
+        hover:text-green-500"
+
+        nextClassName="px-2 py-1 cursor-pointer text-lg 
+        text-gray-700 dark:text-gray-300 
+        hover:text-green-500"
+
+        disabledClassName="opacity-40 cursor-not-allowed"
       />
     </div>
   );

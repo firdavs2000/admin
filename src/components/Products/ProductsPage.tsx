@@ -1,16 +1,15 @@
 import { useSearchParams } from "react-router-dom";
-import { MoreVertical } from "lucide-react";
 import Search from "../../ui/Search";
 import { useProducts } from "../../services/api";
-// import Paginate from "../../pages/Pagination";
+import Paginate from "../../pages/Pagination";
+
+
 
 export default function ProductsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const page = searchParams.get("page")
-    ? Number(searchParams.get("page"))
-    : 1;
-
+  const page = Number(searchParams.get("page")) || 1;
+  const limit = Number(searchParams.get("limit")) || 10;
   const search = searchParams.get("search") || "";
 
   const { data, isLoading } = useProducts({
@@ -18,6 +17,8 @@ export default function ProductsPage() {
     limit: 10,
     search,
   });
+
+  const totalPages = Math.ceil((data?.total || 0) / limit);
 
   const handleSearch = (value: string) => {
     setSearchParams({
@@ -32,7 +33,6 @@ export default function ProductsPage() {
       search,
     });
   };
-
   return (
     <div className="space-y-6 p-6">
       <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
@@ -45,7 +45,9 @@ export default function ProductsPage() {
           <Search search={search} setSearch={handleSearch} />
         </div>
 
-        <button className="hidden lg:flex px-5 py-2 bg-blue-500 text-white rounded-xl">
+        <button className="hidden lg:flex items-center space-x-2 px-4 py-2
+        bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl
+        hover:shadow-lg transition">
           Add Product
         </button>
       </div>
@@ -116,25 +118,16 @@ export default function ProductsPage() {
                   ${p.price}
                 </td>
 
-                <td className="p-3">
-                  <MoreVertical
-                    size={18}
-                    className="text-black dark:text-white"
-                  />
-                </td>
+              
               </tr>
             ))}
           </tbody>
         </table>
-
-        {/* Pagination */}
-        {/* {data?.total && (
-          <Paginate
-            totalPages={Math.ceil(data.total / 10)}
-            currenPage={page}
-            setParamPage={handlePage}
-          />
-        )} */}
+            <Paginate
+        totalPages={totalPages}
+        currentPage={page}
+        setParamPage={handlePage}
+      />
       </div>
     </div>
   );
