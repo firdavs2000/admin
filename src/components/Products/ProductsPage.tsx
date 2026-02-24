@@ -4,9 +4,9 @@ import { useProducts } from "../../services/api";
 import Paginate from "../../pages/Pagination";
 import { Plus } from "lucide-react";
 
-
 export default function ProductsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const page = Number(searchParams.get("page")) || 1;
   const limit = Number(searchParams.get("limit")) || 10;
@@ -14,7 +14,7 @@ export default function ProductsPage() {
 
   const { data } = useProducts({
     page,
-    limit: 10,
+    limit,
     search,
   });
 
@@ -33,40 +33,37 @@ export default function ProductsPage() {
       search,
     });
   };
-  const navigate = useNavigate(); // <-- initialize navigate
 
   return (
-    <div className="space-y-6 p-6">
-      <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+    <div className="min-h-screen bg-gray-100 dark:bg-slate-900 p-6 space-y-6">
+      {/* Title */}
+      <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
         Product List
       </h1>
 
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex-1 max-w-md mx-6">
+      <div className="flex items-center justify-between bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700">
+        <div className="w-full max-w-md">
           <Search search={search} setSearch={handleSearch} />
         </div>
 
         <button
-          className="hidden lg:flex items-center space-x-2 px-4 py-2
-             bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl
-             hover:shadow-lg transition"
           onClick={() => navigate("/addproductpage")}
+          className="flex items-center gap-2 px-5 py-2.5  text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl transition shadow-sm"
         >
           <Plus className="w-4 h-4" />
           <span>Add Product</span>
         </button>
-
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl  dark:border-slate-700 bg-slate-100 dark:bg-slate-800">
+      <div className="overflow-x-auto rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-gray-200 dark:border-slate-700">
         <table className="w-full text-sm">
-          <thead className="bg-slate-100 dark:bg-slate-800">
-            <tr className="text-black dark:text-slate-200">
-              <th className="p-3 text-left">Product Name</th>
-              <th className="p-3 text-left">Status</th>
-              <th className="p-3 text-left">Price</th>
+          <thead className="bg-gray-50 dark:bg-slate-700 text-gray-500 text-xs uppercase">
+            <tr>
+              <th className="p-4 text-left">Product</th>
+              <th className="p-4 text-left">Status</th>
+              <th className="p-4 text-left">Price</th>
             </tr>
           </thead>
 
@@ -74,9 +71,10 @@ export default function ProductsPage() {
             {data?.products?.map((p) => (
               <tr
                 key={p.id}
-                className="border-t border-slate-200 dark:border-slate-700"
+                className="border-t border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700 transition"
               >
-                <td className="p-3 flex items-center gap-3">
+                {/* Product */}
+                <td className="p-4 flex items-center gap-3">
                   <img
                     src={
                       p.thumbnail ||
@@ -84,41 +82,53 @@ export default function ProductsPage() {
                       "https://via.placeholder.com/48"
                     }
                     alt={p.title}
-                    className="w-12 h-12 rounded-full object-cover"
+                    className="w-12 h-12 rounded-full object-cover border border-gray-200"
                   />
+
                   <div>
-                    <p className="font-medium text-black dark:text-white">
+                    <p className="font-medium text-gray-800 dark:text-white">
                       {p.title}
                     </p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-gray-500">
                       {p.category}
                     </p>
                   </div>
                 </td>
 
-                <td className="p-3">
+                {/* Status */}
+                <td className="p-4">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${p.stock > 0
-                      ? "bg-green-100 text-green-600"
-                      : "bg-red-100 text-red-500"
-                      }`}
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      p.stock > 0
+                        ? "bg-green-100 text-green-600"
+                        : "bg-red-100 text-red-500"
+                    }`}
                   >
                     {p.stock > 0 ? "Stock" : "Out Of Stock"}
                   </span>
                 </td>
 
-                <td className="p-3 text-black dark:text-white">
+                {/* Price */}
+                <td className="p-4 font-medium text-gray-800 dark:text-white">
                   ${p.price}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <Paginate
-          totalPages={totalPages}
-          currentPage={page}
-          setParamPage={handlePage}
-        />
+
+        {/* Pagination */}
+        <div className="p-4 flex justify-between items-center border-t border-gray-200 dark:border-slate-700">
+          <p className="text-sm text-gray-500">
+            {page} / {totalPages}
+          </p>
+
+          <Paginate
+            totalPages={totalPages}
+            currentPage={page}
+            setParamPage={handlePage}
+          />
+        </div>
       </div>
     </div>
   );
