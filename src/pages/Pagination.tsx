@@ -1,5 +1,10 @@
 import ReactPaginate from "react-paginate";
 
+type Paginate = {
+  totalPages: number;
+  currentPage: number;
+  setParamPage: (page: number) => void;
+};
 const Paginate = ({ totalPages, currentPage, setParamPage }) => {
   return (
     <div className="flex items-center justify-end gap-4 mt-6">

@@ -58,7 +58,7 @@ const menuItems: MenuItem[] = [
     label: "Ecommerce",
     submenu: [
       { id: "products", label: "Products", link: "/products" },
-      { id: "orders", label: "Orders", link: "/orders" },
+      { id: "orders", label: "AddProductPage", link: "/addproductpage" },
       { id: "customers", label: "Customers", link: "/customers" },
     ],
   },
@@ -178,9 +178,12 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentPage, onPageChange 
                     >
                       {sub.label}
                     </NavLink>
+                    
                   ))}
                 </div>
+                
               )}
+             
             </div>
           );
         })}

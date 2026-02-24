@@ -1,8 +1,8 @@
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Search from "../../ui/Search";
 import { useProducts } from "../../services/api";
 import Paginate from "../../pages/Pagination";
-
+import { Plus } from "lucide-react";
 
 
 export default function ProductsPage() {
@@ -12,7 +12,7 @@ export default function ProductsPage() {
   const limit = Number(searchParams.get("limit")) || 10;
   const search = searchParams.get("search") || "";
 
-  const { data, isLoading } = useProducts({
+  const { data } = useProducts({
     page,
     limit: 10,
     search,
@@ -33,6 +33,8 @@ export default function ProductsPage() {
       search,
     });
   };
+  const navigate = useNavigate(); // <-- initialize navigate
+
   return (
     <div className="space-y-6 p-6">
       <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
@@ -45,26 +47,26 @@ export default function ProductsPage() {
           <Search search={search} setSearch={handleSearch} />
         </div>
 
-        <button className="hidden lg:flex items-center space-x-2 px-4 py-2
-        bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl
-        hover:shadow-lg transition">
-          Add Product
+        <button
+          className="hidden lg:flex items-center space-x-2 px-4 py-2
+             bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl
+             hover:shadow-lg transition"
+          onClick={() => navigate("/addproductpage")}
+        >
+          <Plus className="w-4 h-4" />
+          <span>Add Product</span>
         </button>
+
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+      <div className="overflow-x-auto rounded-xl  dark:border-slate-700 bg-slate-100 dark:bg-slate-800">
         <table className="w-full text-sm">
           <thead className="bg-slate-100 dark:bg-slate-800">
             <tr className="text-black dark:text-slate-200">
-              <th className="p-3 text-left">
-                <input type="checkbox" />
-              </th>
               <th className="p-3 text-left">Product Name</th>
-              <th className="p-3 text-left">Date</th>
               <th className="p-3 text-left">Status</th>
               <th className="p-3 text-left">Price</th>
-              <th className="p-3 text-left">Action</th>
             </tr>
           </thead>
 
@@ -74,10 +76,6 @@ export default function ProductsPage() {
                 key={p.id}
                 className="border-t border-slate-200 dark:border-slate-700"
               >
-                <td className="p-3">
-                  <input type="checkbox" />
-                </td>
-
                 <td className="p-3 flex items-center gap-3">
                   <img
                     src={
@@ -98,17 +96,12 @@ export default function ProductsPage() {
                   </div>
                 </td>
 
-                <td className="p-3 text-black dark:text-white">
-                  {p.date || "-"}
-                </td>
-
                 <td className="p-3">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      p.stock > 0
-                        ? "bg-green-100 text-green-600"
-                        : "bg-red-100 text-red-500"
-                    }`}
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${p.stock > 0
+                      ? "bg-green-100 text-green-600"
+                      : "bg-red-100 text-red-500"
+                      }`}
                   >
                     {p.stock > 0 ? "Stock" : "Out Of Stock"}
                   </span>
@@ -117,17 +110,15 @@ export default function ProductsPage() {
                 <td className="p-3 text-black dark:text-white">
                   ${p.price}
                 </td>
-
-              
               </tr>
             ))}
           </tbody>
         </table>
-            <Paginate
-        totalPages={totalPages}
-        currentPage={page}
-        setParamPage={handlePage}
-      />
+        <Paginate
+          totalPages={totalPages}
+          currentPage={page}
+          setParamPage={handlePage}
+        />
       </div>
     </div>
   );
