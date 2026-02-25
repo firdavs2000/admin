@@ -4,15 +4,18 @@ interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   type?: "button" | "submit";
-   required: string;
+  disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, onClick, type = 'button' }) => {
+const Button: React.FC<ButtonProps> = ({ children, onClick, type = 'button', disabled }) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+      disabled={disabled}
+      className={`w-full p-2 border-2 text-white rounded-lg transition 
+                  bg-gradient-to-r from-purple-500 to-blue-500 
+                  hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed`}
     >
       {children}
     </button>

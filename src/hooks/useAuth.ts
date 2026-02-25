@@ -12,13 +12,21 @@ export const useAuth = create<AuthState>((set) => ({
   login: async (email, password) => {
     return new Promise<void>((resolve, reject) => {
       setTimeout(() => {
+
+        // VALIDATION
         if (email === "admin@gmail.com" && password === "123456") {
-          set({ user: { email } });
+          const user = { email };
+
+          set({ user });
+
           localStorage.setItem("access", "fake-jwt-token");
+          localStorage.setItem("user", JSON.stringify(user));
+
           resolve();
         } else {
           reject(new Error("Email yoki parol noto‘g‘ri"));
         }
+
       }, 500);
     });
   },
@@ -26,5 +34,6 @@ export const useAuth = create<AuthState>((set) => ({
   logout: () => {
     set({ user: null });
     localStorage.removeItem("access");
+    localStorage.removeItem("user");
   }
 }));

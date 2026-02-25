@@ -78,7 +78,7 @@ export default function AddProductPage() {
   
   return (
   <div className=" flex  bg-gray-100 dark:bg-slate-900 p-4">
-    <div className=" w-full bg-white dark:bg-slate-800 rounded-xl shadow-md border border-gray-200 dark:border-slate-700 p-6">
+    <div className=" w-full rounded-xl shadow-md border border-gray-200 dark:border-slate-700 p-6">
       
       <h2 className="text-2xl font-semibold text-slate-800 dark:text-white mb-6">
         Add Product
@@ -94,7 +94,7 @@ export default function AddProductPage() {
           <input
             type="text"
             placeholder="Enter product title"
-            className="mt-1 w-full px-4 py-2.5 rounded-xl text-slate-400 dark:text-slate-200 bg-gray-100 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="mt-1 w-full px-4 py-2.5 rounded-xl text-slate-400 dark:text-slate-200 bg-slate-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -108,7 +108,7 @@ export default function AddProductPage() {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="mt-1 w-full px-4 py-2.5 rounded-xl text-slate-400 dark:text-slate-200 bg-gray-100 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="mt-1 w-full px-4 py-2.5 rounded-xl text-slate-400 dark:text-slate-200 bg-slate-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
           >
             <option value="">Select category</option>
             {categories.map((cat: any) => (
@@ -128,7 +128,7 @@ export default function AddProductPage() {
             <input
               type="number"
               placeholder="0"
-              className="mt-1 w-full px-4 py-2.5 rounded-xl text-slate-400 dark:text-slate-200 bg-gray-100 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="mt-1 w-full px-4 py-2.5 rounded-xl text-slate-400 dark:text-slate-200 bg-slate-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
             />
@@ -141,7 +141,7 @@ export default function AddProductPage() {
             <input
               type="number"
               placeholder="0"
-              className="mt-1 w-full px-4 py-2.5 rounded-xl text-slate-400 dark:text-slate-200 bg-gray-100 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="mt-1 w-full px-4 py-2.5 rounded-xl text-slate-400 dark:text-slate-200 bg-slate-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
               value={stock}
               onChange={(e) => setStock(Number(e.target.value))}
             />
@@ -156,7 +156,7 @@ export default function AddProductPage() {
           <input
             type="url"
             placeholder="https://example.com/image.jpg"
-            className="mt-1 w-full px-4 py-2.5 rounded-xl text-slate-400 dark:text-slate-200 bg-gray-100 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="mt-1 w-full px-4 py-2.5 rounded-xl text-slate-400 dark:text-slate-200 bg-slate-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
             value={thumbnail}
             onChange={(e) => setThumbnail(e.target.value)}
           />
