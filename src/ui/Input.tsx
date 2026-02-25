@@ -14,7 +14,6 @@ interface InputProps {
 const Input: React.FC<InputProps> = ({
   label,
   type = 'text',
-  placeholder,
   value,
   onChange,
   isPassword = false,
@@ -25,22 +24,28 @@ const Input: React.FC<InputProps> = ({
   const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
 
   return (
-    <div className="flex flex-col mb-4 relative bg-slate-50">
-      <label className="mb-1 text-gray-700 bg-slate-50">{label}</label>
+    <div className="relative w-full mb-6">
       <input
         type={inputType}
-        placeholder={placeholder}
         value={value}
         onChange={onChange}
         disabled={loading}
-        className={`bg-slate-50 border border-gray-300 rounded-md py-2 px-3 pr-${isPassword ? '10' : '2'} focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
+        className={`peer block w-full rounded-md border border-gray-300 bg-white py-3 px-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:opacity-50`}
       />
+      <label
+        className="absolute left-3 top-3 text-gray-400 text-sm transition-all 
+                   peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base
+                   peer-focus:top-[-6px] peer-focus:text-blue-500 peer-focus:text-sm bg-white px-1"
+      >
+        {label}
+      </label>
+
       {isPassword && (
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          disabled={loading} 
-          className="absolute right-3 top-[38px] text-gray-500 hover:text-black transition disabled:opacity-50"
+          disabled={loading}
+          className="absolute right-3 top-3 text-gray-500 hover:text-black transition disabled:opacity-50"
         >
           {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
         </button>

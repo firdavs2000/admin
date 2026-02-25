@@ -4,12 +4,11 @@ import Input from "../ui/Input";
 import Button from "../ui/Button";
 import { useAuth } from "../hooks/useAuth";
 import img from "../assets/img/login-bg.webp";
-import { Eye, EyeOff, Loader2, Github, Zap } from "lucide-react";
+import { Loader2, Github, Zap } from "lucide-react";
 
 const AuthLogin: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -112,15 +111,7 @@ const AuthLogin: React.FC = () => {
 
           {/* LOGIN FORM */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            <Input
-              label="Name"
-              type="text"
-              placeholder="Ismingizni kiriting..."
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              loading={loading}
-            />
-
+          
             <Input
               label="Email"
               type="email"
