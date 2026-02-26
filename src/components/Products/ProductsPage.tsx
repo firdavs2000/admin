@@ -35,14 +35,14 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 p-6 space-y-6">
+    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-bl-2xl border border-slate-200/50 dark:border-slate-700/50 p-6">
       {/* Title */}
       <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
         Product List
       </h1>
 
       {/* Header */}
-      <div className="flex items-center justify-between bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-white dark:border-slate-700">
+      <div className="flex items-center justify-between  p-4 rounded-2xl shadow-sm border border-white dark:border-slate-700">
         <div className="w-full max-w-md">
           <Search search={search} setSearch={handleSearch} />
         </div>
@@ -60,9 +60,9 @@ export default function ProductsPage() {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-white dark:border-slate-700">
+      <div className="overflow-x-auto rounded-2xl  shadow-sm border border-white dark:border-slate-700">
         <table className="w-full text-sm">
-          <thead className="bg-white dark:bg-slate-700 text-gray-500 text-xs uppercase">
+          <thead className=" text-gray-500 text-xs uppercase">
             <tr>
               <th className="p-4 text-left">Product</th>
               <th className="p-4 text-left">Status</th>
