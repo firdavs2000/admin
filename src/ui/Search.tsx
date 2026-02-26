@@ -17,7 +17,7 @@ const Qidiruv: React.FC<Props> = ({ search, setSearch }) => {
       <input
         type="text"
         className="w-full pl-10 pr-10 py-2.5 rounded-xl
-        bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+        bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700
         text-slate-800 dark:text-white placeholder-slate-500
         focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
         placeholder="Search Product..."

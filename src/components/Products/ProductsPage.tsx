@@ -35,31 +35,34 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-slate-900 p-6 space-y-6">
+    <div className="min-h-screen bg-white dark:bg-slate-900 p-6 space-y-6">
       {/* Title */}
       <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
         Product List
       </h1>
 
       {/* Header */}
-      <div className="flex items-center justify-between bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700">
+      <div className="flex items-center justify-between bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-white dark:border-slate-700">
         <div className="w-full max-w-md">
           <Search search={search} setSearch={handleSearch} />
         </div>
 
         <button
-          onClick={() => navigate("/addproductpage")}
-          className="flex items-center gap-2 px-5 py-2.5  text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl transition shadow-sm"
-        >
+    
+        onClick={() => navigate("/addproductpage")}
+        
+        className="hidden lg:flex items-center space-x-2 px-4 py-2
+        bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl
+        hover:shadow-lg transition">
           <Plus className="w-4 h-4" />
-          <span>Add Product</span>
+          <span className="text-sm font-medium">Add Product</span>
         </button>
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-gray-200 dark:border-slate-700">
+      <div className="overflow-x-auto rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-white dark:border-slate-700">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 dark:bg-slate-700 text-gray-500 text-xs uppercase">
+          <thead className="bg-white dark:bg-slate-700 text-gray-500 text-xs uppercase">
             <tr>
               <th className="p-4 text-left">Product</th>
               <th className="p-4 text-left">Status</th>
@@ -71,7 +74,7 @@ export default function ProductsPage() {
             {data?.products?.map((p) => (
               <tr
                 key={p.id}
-                className="border-t border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700 transition"
+                className="border-t border-white dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700 transition"
               >
                 {/* Product */}
                 <td className="p-4 flex items-center gap-3">
@@ -82,7 +85,7 @@ export default function ProductsPage() {
                       "https://via.placeholder.com/48"
                     }
                     alt={p.title}
-                    className="w-12 h-12 rounded-full object-cover border border-gray-200"
+                    className="w-12 h-12 rounded-full object-cover border border-white"
                   />
 
                   <div>
