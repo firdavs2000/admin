@@ -1,18 +1,21 @@
-import { 
-  Bell, 
-  ChevronDown, 
-  Filter, 
-  Menu, 
-  Plus, 
-  Search, 
-  Settings, 
-  Sun, 
-  Moon, 
-  LogOut, 
-  User 
+import {
+  Bell,
+  ChevronDown,
+  Filter,
+  Menu,
+  Plus,
+  Search,
+  Settings,
+  Sun,
+  Moon,
+  LogOut,
+  User
 } from "lucide-react";
 import { useState } from "react";
 import avatar from "../../assets/img/bg.jpg";
+import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { createPortal } from "react-dom";
 
 function Header({ sidebarCollapsed, onToggleSidebar }) {
   const [dark, setDark] = useState(
@@ -24,6 +27,13 @@ function Header({ sidebarCollapsed, onToggleSidebar }) {
   const toggleTheme = () => {
     document.documentElement.classList.toggle("dark");
     setDark(!dark);
+  };
+  const logout = useAuth((state) => state.logout);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
 
   return (
@@ -109,7 +119,7 @@ function Header({ sidebarCollapsed, onToggleSidebar }) {
                 Notifications
               </p>
               <div className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-                🔔 New order received  
+                🔔 New order received
               </div>
             </div>
           )}
@@ -126,25 +136,38 @@ function Header({ sidebarCollapsed, onToggleSidebar }) {
             <ChevronDown className="w-4 h-4 text-slate-400" />
           </button>
 
-          {userOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800
-            rounded-xl shadow-lg border dark:border-slate-700 p-2 z-50">
-              <button className="w-full flex items-center gap-2 px-3 py-2 text-sm
-              hover:bg-slate-100 dark:hover:bg-slate-700 rounded">
-                <User className="w-4 h-4" /> Profile
-              </button>
-              <button className="w-full flex items-center gap-2 px-3 py-2 text-sm
-              hover:bg-slate-100 dark:hover:bg-slate-700 rounded">
-                <Settings className="w-4 h-4" /> Settings
-              </button>
-              <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-500
-              hover:bg-red-50 dark:hover:bg-red-900/30 rounded">
-                <LogOut className="w-4 h-4" /> Logout
-              </button>
-            </div>
-          )}
+          {userOpen &&
+            createPortal(
+              <div className="absolute right-6 top-16 w-48 bg-white dark:bg-slate-800
+        rounded-xl shadow-xl border dark:border-slate-700 p-2 z-[9999]">
+
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm
+        hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-900 dark:text-slate-50 cursor-pointer">
+                  <User className="w-4 h-4" /> Profile
+                </button>
+
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-slate-900 dark:text-slate-50
+        hover:bg-slate-100 dark:hover:bg-slate-700 rounded cursor-pointer">
+                  <Settings className="w-4 h-4" /> Settings
+                </button>
+
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-500
+        hover:bg-red-50 dark:hover:bg-red-900/30 rounded cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4" /> Logout
+                </button>
+
+              </div>,
+              document.body
+            )
+          }
+
         </div>
+
       </div>
+
     </div>
   );
 }

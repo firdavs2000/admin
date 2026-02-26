@@ -137,7 +137,7 @@ const AuthLogin: React.FC = () => {
               className="py-2 px-3 w-full"
             >
               {loading && <Loader2 className="animate-spin mr-2" size={18} />}
-              {loading ? "Yuklanmoqda..." : "Login"}
+              {loading ? "Yuklanmoqda..." : "Sign In"}
             </Button>
           </form>
 
