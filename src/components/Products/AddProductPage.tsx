@@ -79,7 +79,7 @@ export default function AddProductPage() {
 
   return (
     <div className=" flex  p-4 ">
-      <div className="w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-bl-2xl border border-slate-200/50 dark:border-slate-700/50 p-6">
+      <div className="w-full bg-white dark:bg-slate-900 backdrop-blur-xl rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 p-6">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
           <div className="flex items-center justify-between p-2">
             <div className="w-full max-w-md">
