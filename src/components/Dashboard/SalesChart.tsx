@@ -1,4 +1,3 @@
-import React from 'react';
 import { PieChart, Pie, ResponsiveContainer, Tooltip, Cell } from 'recharts';
 
 const data = [
@@ -10,7 +9,7 @@ const data = [
 
 function SalesChart() {
   return (
-    <div className='bg-white dark:bg-slate-900 backdrop-blur-xl rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 p-6'>
+    <div className='bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-200/50 dark:border-slate-700/50 p-6 overflow-hidden'>
       <div className='mb-6'>
         <h3 className='text-lg font-bold text-slate-800 dark:text-white'>
           Sales by Category

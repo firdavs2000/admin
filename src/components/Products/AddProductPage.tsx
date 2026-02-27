@@ -79,7 +79,7 @@ export default function AddProductPage() {
 
   return (
     <div className=" flex  p-4 ">
-      <div className="w-full bg-white dark:bg-slate-900 backdrop-blur-xl rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 p-6">
+      <div className="w-full p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
           <div className="flex items-center justify-between p-2">
             <div className="w-full max-w-md">
@@ -104,7 +104,10 @@ export default function AddProductPage() {
             <input
               type="text"
               placeholder="Enter product title"
-              className="peer block w-full rounded-md border border-gray-300 bg-white py-3 px-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+              className="peer block w-full pl-10 pr-10 py-2.5 rounded-xl
+        bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+        text-slate-800 dark:text-white placeholder-slate-500
+        focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -117,9 +120,12 @@ export default function AddProductPage() {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="peer block w-full rounded-md border border-gray-300 bg-white py-3 px-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                className="peer block w-full pl-10 pr-10 py-2.5 rounded-xl
+        bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+        text-slate-800 dark:text-white placeholder-slate-500
+        focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
               >
-                <option value="">Select category</option>
+                <option value="" className="text-slate-900 dark:text-slate-500">Select category</option>
                 {categories.map((cat: any) => (
                   <option key={cat.slug} value={cat.slug}>
                     {cat.name}
@@ -134,7 +140,10 @@ export default function AddProductPage() {
               <input
                 type="url"
                 placeholder="https://example.com/image.jpg"
-                className="peer  w-full rounded-md border border-gray-300 bg-white py-3 px-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                className="peer w-full pl-10 pr-10 py-2.5 rounded-xl
+        bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+        text-slate-800 dark:text-white placeholder-slate-500
+        focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 value={thumbnail}
                 onChange={(e) => setThumbnail(e.target.value)}
               />
@@ -151,7 +160,10 @@ export default function AddProductPage() {
               <input
                 type="number"
                 placeholder="0"
-                className="peer  w-full rounded-md border border-gray-300 bg-white py-3 px-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                className="peer  w-full pl-10 pr-10 py-2.5 rounded-xl
+        bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+        text-slate-800 dark:text-white placeholder-slate-500
+        focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 value={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
               />
@@ -164,15 +176,15 @@ export default function AddProductPage() {
               <input
                 type="number"
                 placeholder="0"
-                className="peer  w-full rounded-md border border-gray-300 bg-white py-3 px-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                className="peer w-full pl-10 pr-10 py-2.5 rounded-xl
+        bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+        text-slate-800 dark:text-white placeholder-slate-500
+        focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 value={stock}
                 onChange={(e) => setStock(Number(e.target.value))}
               />
             </div>
           </div>
-
-          {/* Thumbnail */}
-
         </form>
       </div>
     </div>

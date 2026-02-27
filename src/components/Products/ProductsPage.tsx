@@ -35,7 +35,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 backdrop-blur-xl rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 p-6">
+    <div className="bg-white/80 p-6 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden з-6">
       {/* Title */}
       <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
         Product List
@@ -43,12 +43,11 @@ export default function ProductsPage() {
 
       {/* Header */}
       <div className="flex items-center justify-between  p-4 rounded-2xl shadow-sm border border-white dark:border-slate-700">
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md ">
           <Search search={search} setSearch={handleSearch} />
         </div>
 
         <button
-    
         onClick={() => navigate("/addproductpage")}
         
         className="hidden lg:flex items-center space-x-2 px-4 py-2
@@ -60,7 +59,7 @@ export default function ProductsPage() {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-2xl  shadow-sm border border-white dark:border-slate-700">
+      <div className="overflow-x-auto rounded-2xl  shadow-sm border border-white dark:border-slate-700 ">
         <table className="w-full text-sm">
           <thead className=" text-gray-500 text-xs uppercase">
             <tr>

@@ -119,9 +119,9 @@ const TableSection: React.FC = () => {
     <div className="space-y-6">
 
       {/* -------- RECENT ORDERS -------- */}
-      <div className="bg-white dark:bg-slate-900/80 backdrop-blur-xl rounded-b-xl
-        border border-slate-200/50 dark:hover:border-slate-700/50 overflow-hidden">
-        
+      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
+
+
         <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -141,7 +141,7 @@ const TableSection: React.FC = () => {
             <table className="w-full">
               <thead>
                 <tr>
-                  {["Order ID","Customer","Product","Amount","Status","Action"].map(h => (
+                  {["Order ID", "Customer", "Product", "Amount", "Status", "Action"].map(h => (
                     <th key={h} className="text-left p-4 text-sm font-semibold text-slate-600">
                       {h}
                     </th>
@@ -153,7 +153,7 @@ const TableSection: React.FC = () => {
                   <tr key={order.id}
                     className="border-b border-slate-200/50 dark:border-slate-700/50 
                     hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
-                    
+
                     <td className="p-4 text-sm font-medium text-blue-500">{order.id}</td>
                     <td className="p-4 text-sm text-slate-800 dark:text-white">{order.customer}</td>
                     <td className="p-4 text-sm text-slate-800 dark:text-white">{order.product}</td>
@@ -177,8 +177,7 @@ const TableSection: React.FC = () => {
       </div>
 
       {/* -------- TOP PRODUCTS -------- */}
-      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl border
-        border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
+      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
 
         <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50 flex items-center justify-between">
           <div>
@@ -214,11 +213,10 @@ const TableSection: React.FC = () => {
 
                 <div className="flex items-center justify-end space-x-1 text-xs">
                   <TrendingUp
-                    className={`w-3 h-3 ${
-                      item.trend === "up"
+                    className={`w-3 h-3 ${item.trend === "up"
                         ? "text-emerald-500"
                         : "text-red-500 rotate-180"
-                    }`}
+                      }`}
                   />
                   <span className={getTrendStyle(item.trend)}>
                     {item.change}
