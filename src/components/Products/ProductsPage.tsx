@@ -4,6 +4,8 @@ import Search from "../../ui/Search";
 import { useProducts } from "../../services/api";
 import Paginate from "../../pages/Pagination";
 import { Plus } from "lucide-react";
+import { useAuth } from "../../hooks/useAuth";
+import { PERMISSIONS } from "../../hooks/useAuth";
 
 export default function ProductsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,19 +18,25 @@ export default function ProductsPage() {
 
   // 🔥 Local state (debounce uchun)
   const [searchValue, setSearchValue] = useState(search);
+ const hasPermission = useAuth((s) => s.hasPermission);
 
-  // 🔥 Debounce (500ms)
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setSearchParams({
-        page: "1",
-        search: searchValue,
-        limit: limit.toString(),
-      });
-    }, 500);
 
-    return () => clearTimeout(timeout);
-  }, [searchValue]);
+useEffect(() => {
+  const timeout = setTimeout(() => {
+    setSearchParams((prev) => {
+      const params = new URLSearchParams(prev);
+
+      params.set("page", "1");
+      params.set("search", searchValue);
+      params.set("limit", limit.toString());
+
+      return params;
+    });
+  }, 500);
+
+  return () => clearTimeout(timeout);
+}, [searchValue, limit, setSearchParams]);
+
 
   // API
   const { data, isLoading } = useProducts({
@@ -65,6 +73,7 @@ export default function ProductsPage() {
         </div>
 
         {/* Add Button */}
+        {hasPermission(PERMISSIONS.ADD_PRODUCT) && (
         <button
           onClick={() => navigate("/addproductpage")}
           className="hidden lg:flex items-center space-x-2 px-4 py-2
@@ -74,6 +83,7 @@ export default function ProductsPage() {
           <Plus className="w-4 h-4" />
           <span className="text-sm font-medium">Add Product</span>
         </button>
+        )}
       </div>
 
       {/* Table */}

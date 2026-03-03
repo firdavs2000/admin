@@ -1,20 +1,30 @@
 import { Plus } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function AddProductPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+
+  // 🚫 Faqat admin va manager kirishi mumkin
+  if (!user || !["admin", "manager"].includes(user.role)) {
+    return (
+      <div className="p-6 text-red-600">
+        Sizda mahsulot qo‘shish huquqi yo‘q!
+      </div>
+    );
+  }
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
   const [thumbnail, setThumbnail] = useState("");
-
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // 📦 CATEGORY FETCH
+  // 📦 Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -25,15 +35,12 @@ export default function AddProductPage() {
         console.log(error);
       }
     };
-
     fetchCategories();
   }, []);
 
-  // 🚀 SUBMIT
+  // 🚀 Submit handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // ✅ VALIDATION
     if (!title || !category || !price) {
       alert("Barcha maydonlarni to‘ldir!");
       return;
@@ -41,34 +48,18 @@ export default function AddProductPage() {
 
     setLoading(true);
 
-    const newProduct = {
-      id: Date.now(), // local ID
-      title,
-      category,
-      price,
-      stock,
-      thumbnail,
-    };
+    const newProduct = { id: Date.now(), title, category, price, stock, thumbnail };
 
     try {
-      // fake API (optional)
       await fetch("https://dummyjson.com/products/add", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newProduct),
       });
 
-      // 💾 LOCAL STORAGE SAVE
       const existing = JSON.parse(localStorage.getItem("products") || "[]");
+      localStorage.setItem("products", JSON.stringify([newProduct, ...existing]));
 
-      localStorage.setItem(
-        "products",
-        JSON.stringify([newProduct, ...existing])
-      );
-
-      // 🔄 redirect
       navigate("/products");
     } catch (error) {
       console.log(error);
@@ -76,7 +67,6 @@ export default function AddProductPage() {
       setLoading(false);
     }
   };
-
   return (
     <div className=" bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-200/50 dark:border-slate-700/50  p-6 overflow-hidden">
       <div className="w-full">
@@ -91,11 +81,14 @@ export default function AddProductPage() {
             <button
               onClick={() => navigate("/addproductpage")}
               className="hidden lg:flex items-center space-x-2 px-4 py-2
-        bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl
-        hover:shadow-lg transition">
+    bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl
+    hover:shadow-lg transition"
+            >
               <Plus className="w-4 h-4" />
-              <span>Add Product</span>
+              {loading ? "Saving..." : "Add Product"}
             </button>
+
+
           </div>
           <div>
             <label className="text-sm text-slate-950 dark:text-slate-300 bg-white dark:bg-slate-800">
